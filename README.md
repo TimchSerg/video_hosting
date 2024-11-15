@@ -13,7 +13,8 @@ $ npm install
 $ npm install --legacy-peer-deps
 ```
 
-В проекте используется модуль fluent-ffmpeg. Подробнее о создании превью к видео [Статья](https://blog.logrocket.com/generating-video-previews-with-node-js-and-ffmpeg/)
+В проекте используется модуль fluent-ffmpeg. 
+Подробнее о создании превью к видео [Статья](https://blog.logrocket.com/generating-video-previews-with-node-js-and-ffmpeg/)
 Предварительно требуется установить в систему [ffmpeg](https://losst.pro/ustanovka-ffmpeg-v-ubuntu-20-04)
 
 
