@@ -1,5 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { existsSync, mkdir } from 'node:fs';
+
+var paths = [
+    './public/videos',
+    './public/previews'
+]
+
+for (const path of paths) {
+    if (existsSync(path)) continue
+    mkdir(path, { recursive: true }, (err) => { 
+        console.error(`Fail to create diractory ${path}`) }
+    )
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
