@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { VideoModule } from './video/video.module';
+import { VideoModule } from '../video/video.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
