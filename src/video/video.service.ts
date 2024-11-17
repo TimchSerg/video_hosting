@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { VideoModel } from '../database/models/video.model';
 const ffmpeg = require('fluent-ffmpeg');
 
 @Injectable()
 export class VideoService {
+  constructor(
+    @InjectModel(VideoModel)
+    private videoModel: typeof VideoModel,
+  ) {}
 
   private getVideoInfo = (inputPath: string): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -83,8 +89,8 @@ export class VideoService {
     return 'This action adds a new video';
   }
 
-  findAll() {
-    return `This action returns all video`;
+  findAll(): Promise<VideoModel[]> {
+    return this.videoModel.findAll();
   }
 
   findOne(id: number) {

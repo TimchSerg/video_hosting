@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, NotFoundException } from '@nestjs/common';
 import { VideoService } from './video.service';
 import { UpdateVideoDto } from './dto/update-video.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -25,6 +25,12 @@ export class VideoController {
   @Get()
   findAll() {
     return this.videoService.findAll();
+  }
+
+  @Get("/file/:filename")
+  async getFileEmail(@Param("filename") filename: string, @Res() res: any) {
+    if(filename === null) throw new NotFoundException()
+    res.sendFile(filename, { root: 'public/videos'});
   }
 
   @Get(':id')
