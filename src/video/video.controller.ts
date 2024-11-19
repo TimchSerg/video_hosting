@@ -27,10 +27,16 @@ export class VideoController {
     return this.videoService.findAll();
   }
 
-  @Get("/file/:filename")
-  async getFileEmail(@Param("filename") filename: string, @Res() res: any) {
+  @Get("/file/video/:filename")
+  async getFileVideo(@Param("filename") filename: string, @Res() res: any) {
     if(filename === null) throw new NotFoundException()
     res.sendFile(filename, { root: 'public/videos'});
+  }
+
+  @Get("/file/thumbnail/:filename")
+  async getFileThumbNail(@Param("filename") filename: string, @Res() res: any) {
+    if(filename === null) throw new NotFoundException()
+    res.sendFile(filename, { root: 'public/previews'});
   }
 
   @Get(':id')
