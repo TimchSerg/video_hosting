@@ -76,7 +76,14 @@ export class VideoService {
       return new ffmpeg()
         .input(inputPath)
         .inputOptions([`-ss ${startTimeInSeconds}`])
-        .outputOptions([`-t ${fragmentDurationInSeconds}`, '-loop 0'])
+        .outputOptions([
+          `-t ${fragmentDurationInSeconds}`, 
+          '-vcodec',
+          'libwebp',
+          '-loop 0', // Повторение
+          '-vf fps=15', 
+          '-vf scale=720:-1' // Размер 720 с соотношением сторон
+        ])
         .noAudio()
         .output(outputPath)
         .on('end', resolve)
