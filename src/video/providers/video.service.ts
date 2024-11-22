@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CreateVideoDto } from './dto/create-video.dto';
-import { UpdateVideoDto } from './dto/update-video.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { CreateVideoDto } from '../dto/create-video.dto';
+import { UpdateVideoDto } from '../dto/update-video.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { VideoModel } from '../database/models/video.model';
+import { VideoModel } from '../../database/models/video.model';
+import { VideoFactory } from './video.factory';
+import { VideoRepository } from './video.repository';
 const ffmpeg = require('fluent-ffmpeg');
 
 @Injectable()
@@ -10,6 +12,11 @@ export class VideoService {
   constructor(
     @InjectModel(VideoModel)
     private videoModel: typeof VideoModel,
+
+    @Inject('VideoFactory')
+    private videoFactory: VideoFactory,
+    @Inject('VideoRepository')
+    private videoRepository: VideoRepository,
   ) {}
 
   private getVideoInfo = (inputPath: string): Promise<any> => {
@@ -92,8 +99,15 @@ export class VideoService {
     });
   };
 
-  create(createVideoDto: CreateVideoDto) {
-    return 'This action adds a new video';
+  async create(createVideoDto: CreateVideoDto) {
+
+    const video = await this.videoFactory.create(
+      createVideoDto.name,
+      createVideoDto.urlVideo,
+      createVideoDto.thumbNail
+    )
+
+    await this.videoRepository.save(video)
   }
 
   findAll(): Promise<VideoModel[]> {

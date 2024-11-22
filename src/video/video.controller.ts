@@ -1,25 +1,37 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, NotFoundException } from '@nestjs/common';
-import { VideoService } from './video.service';
+import { VideoService } from './providers/video.service';
 import { UpdateVideoDto } from './dto/update-video.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { uploadVideoHelper } from './upload.video.helper';
+import { CreateVideoDto } from './dto/create-video.dto';
 
 @Controller('video')
 export class VideoController {
   constructor(private readonly videoService: VideoService) {}
 
   @Post()
+  async create(@Body() createVideoDto: CreateVideoDto) {
+    await this.videoService.create(createVideoDto)
+  }
+
+  @Post('/upload')
   @UseInterceptors(FileInterceptor('video', {
     storage: diskStorage({
       destination: uploadVideoHelper.destinationPath,
       filename: uploadVideoHelper.customFileName,
     })
   }))
-  async create(@UploadedFile() file: Express.Multer.File) {
+  async upload(@UploadedFile() file: Express.Multer.File) {
     const originalName = file.filename.split('.')[0];
-    const thumbNail = await this.videoService.createFragmentPreview(file.destination+'/'+file.filename, "./public/previews/"+originalName+".webp");
-    console.log(thumbNail)
+    const thumbnail = "./public/previews/"+originalName+".webp"
+    await this.videoService.createFragmentPreview(file.destination+'/'+file.filename, thumbnail);
+    
+    return { 
+      name: originalName, 
+      urlVideo: `/file/video/${file.filename}`, 
+      thumbNail: thumbnail 
+    }
   }
 
   @Get()
