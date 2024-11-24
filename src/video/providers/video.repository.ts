@@ -9,6 +9,7 @@ function reconstitute(videoModel: VideoModel): Video {
   return new Video(
     new Id(UUID.from(videoModel.id)),
     videoModel.name,
+    videoModel.title,
     videoModel.urlVideo,
     videoModel.thumbNail,
     videoModel.createdAt
@@ -42,6 +43,7 @@ export class VideoRepository {
     model.set({
       id: video.id.value.toString(),
       name: video.name,
+      title: video.title,
       urlVideo: video.urlVideo,
       thumbNail: video.thumbNail,
       createdAt: video.createdAt

@@ -103,6 +103,7 @@ export class VideoService {
 
     const video = await this.videoFactory.create(
       createVideoDto.name,
+      createVideoDto.title,
       createVideoDto.urlVideo,
       createVideoDto.thumbNail
     )

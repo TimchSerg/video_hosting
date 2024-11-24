@@ -3,6 +3,7 @@ import { Id } from "src/values/id.values"
 export class Video {
   private _id: Id
   private _name: string
+  private _title: string
   private _urlVideo: string
   private _thumbNail: string
   private _createdAt: Date
@@ -10,12 +11,14 @@ export class Video {
   constructor(
     id: Id,
     name: string,
+    title: string,
     urlVideo: string,
     thumbNail: string,
     createdAt: Date
   ) {
     this._id = id
     this._name = name
+    this._title = title
     this._urlVideo = urlVideo
     this._thumbNail = thumbNail
     this._createdAt = createdAt
@@ -31,6 +34,14 @@ export class Video {
 
   set name(name: string) {
     this._name = name
+  }
+
+  get title(): string {
+    return this._name
+  }
+
+  set title(title: string) {
+    this._title = title
   }
 
   get urlVideo(): string {

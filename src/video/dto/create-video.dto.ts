@@ -6,6 +6,9 @@ export class CreateVideoDto {
   name!: string;
 
   @IsString()
+  title!: string;
+
+  @IsString()
   urlVideo!: string;
 
   @IsString()

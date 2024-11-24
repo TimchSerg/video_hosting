@@ -10,6 +10,7 @@ export class VideoFactory {
   
   async create(
     name: string,
+    title: string,
     urlVideo: string,
     thumbNail: string,
   ): Promise<Video> {
@@ -17,6 +18,7 @@ export class VideoFactory {
     return new Video(
       new Id(UUID.generate()),
       name,
+      title,
       urlVideo,
       thumbNail,
       new Date()

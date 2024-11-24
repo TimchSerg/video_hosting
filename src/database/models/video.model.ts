@@ -17,6 +17,9 @@ export class VideoModel extends Model<VideoModel> {
   name!: string
 
   @Column(DataType.TEXT)
+  title!: string
+
+  @Column(DataType.TEXT)
   urlVideo!: string
 
   @Column(DataType.TEXT)
