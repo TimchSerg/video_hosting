@@ -4,8 +4,6 @@
 
 ## Installation
 
-Перед установкой зависимостей создайте в корневой директории папку public. В ней еще две папки videos и previews.
-
 ```bash
 $ npm install
 ```
