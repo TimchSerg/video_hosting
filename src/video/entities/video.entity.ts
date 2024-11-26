@@ -37,7 +37,7 @@ export class Video {
   }
 
   get title(): string {
-    return this._name
+    return this._title
   }
 
   set title(title: string) {

@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { VideoModel } from '../../database/models/video.model';
 import { VideoFactory } from './video.factory';
 import { VideoRepository } from './video.repository';
+import { WrongFormatException } from 'src/exceptions';
 const ffmpeg = require('fluent-ffmpeg');
 
 @Injectable()
@@ -111,12 +112,17 @@ export class VideoService {
     await this.videoRepository.save(video)
   }
 
-  findAll(): Promise<VideoModel[]> {
+  async findAll(): Promise<VideoModel[]> {
     return this.videoModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} video`;
+  async findOne(id: string) {
+    const video = await this.videoModel.findOne({
+      where: { id: id }
+    });
+    if(!video) throw new WrongFormatException('Данный видеоролик не найден');
+
+    return video
   }
 
   update(id: number, updateVideoDto: UpdateVideoDto) {

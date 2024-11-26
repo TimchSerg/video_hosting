@@ -69,8 +69,8 @@ export class VideoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.videoService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return this.videoService.findOne(id);
   }
 
   @Patch(':id')
