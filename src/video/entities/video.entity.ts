@@ -6,6 +6,7 @@ export class Video {
   private _title: string
   private _urlVideo: string
   private _thumbNail: string
+  private _pic: string
   private _createdAt: Date
 
   constructor(
@@ -14,6 +15,7 @@ export class Video {
     title: string,
     urlVideo: string,
     thumbNail: string,
+    pic: string,
     createdAt: Date
   ) {
     this._id = id
@@ -21,6 +23,7 @@ export class Video {
     this._title = title
     this._urlVideo = urlVideo
     this._thumbNail = thumbNail
+    this._pic = pic
     this._createdAt = createdAt
   }
 
@@ -58,6 +61,14 @@ export class Video {
 
   set thumbNail(thumbNail: string) {
     this._thumbNail = thumbNail
+  }
+
+  get pic(): string {
+    return this._pic
+  }
+
+  set pic(pic: string) {
+    this._pic = pic
   }
 
   get createdAt(): Date {

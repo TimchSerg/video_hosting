@@ -4,6 +4,7 @@ import * as path from 'path';
 import _Umzug, {  } from 'umzug';
 import { DataTypes } from 'sequelize';
 import { videoMigration } from '../migrations/00_initial';
+import { migration000001 } from '../migrations/000001.migration';
 const {Umzug, SequelizeStorage} = require('umzug')
 
 export type UpOptions = _Umzug.MigrateUpOptions
@@ -52,7 +53,8 @@ export class MigrationsService {
         // },
       // },
       migrations: [
-        videoMigration
+        videoMigration,
+        migration000001
       ],
       context: sequelize.getQueryInterface(),
       storage: new SequelizeStorage({ sequelize }),
