@@ -13,6 +13,7 @@ export class VideoFactory {
     title: string,
     urlVideo: string,
     thumbNail: string,
+    pic: string
   ): Promise<Video> {
 
     return new Video(
@@ -21,6 +22,7 @@ export class VideoFactory {
       title,
       urlVideo,
       thumbNail,
+      pic,
       new Date()
     )
   }

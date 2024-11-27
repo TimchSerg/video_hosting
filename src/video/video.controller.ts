@@ -19,6 +19,9 @@ import { diskStorage } from 'multer';
 import { uploadVideoHelper } from './upload.video.helper';
 import { CreateVideoDto } from './dto/create-video.dto';
 import {Request} from 'express';
+import * as sharp from 'sharp';
+import * as path from 'path';
+import { WrongFormatException } from 'src/exceptions';
 
 @Controller('video')
 export class VideoController {
@@ -42,12 +45,26 @@ export class VideoController {
   ) {
     const baseUrl = `${req.protocol}://${req.get('Host')}`;
     const originalName = file.filename.split('.')[0];
-    const thumbnail = "./public/previews/"+originalName+".webp"
+    const filename = originalName + '.webp';
+    const thumbnail = "./public/previews/"+filename;
+    const pic = "./public/pic/"+filename
     await this.videoService.createFragmentPreview(file.destination+'/'+file.filename, thumbnail);
     
+    try {
+      sharp(thumbnail)
+        .rotate()
+        .resize(1200)
+        .webp({ effort: 3 })
+        .toFile(pic)
+    } catch (error) {
+      console.log(error);
+      throw new WrongFormatException('Произошла ошибка во время создания картинки')
+    }
+
     return {  
       urlVideo: baseUrl + '/api/video/file/video/' + file.filename, 
-      thumbNail: baseUrl + '/api/video/file/thumbnail/' + originalName + ".webp"
+      thumbNail: baseUrl + '/api/video/file/thumbnail/' + filename,
+      pic: baseUrl + '/api/video/file/pic/' + filename,
     }
   }
 
@@ -66,6 +83,12 @@ export class VideoController {
   async getFileThumbNail(@Param("filename") filename: string, @Res() res: any) {
     if(filename === null) throw new NotFoundException()
     res.sendFile(filename, { root: 'public/previews'});
+  }
+
+  @Get("/file/pic/:filename")
+  async getFilePic(@Param("filename") filename: string, @Res() res: any) {
+    if(filename === null) throw new NotFoundException()
+    res.sendFile(filename, { root: 'public/pic'});
   }
 
   @Get(':id')

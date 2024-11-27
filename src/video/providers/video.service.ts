@@ -106,7 +106,8 @@ export class VideoService {
       createVideoDto.name,
       createVideoDto.title,
       createVideoDto.urlVideo,
-      createVideoDto.thumbNail
+      createVideoDto.thumbNail,
+      createVideoDto.pic
     )
 
     await this.videoRepository.save(video)

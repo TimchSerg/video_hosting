@@ -12,6 +12,7 @@ function reconstitute(videoModel: VideoModel): Video {
     videoModel.title,
     videoModel.urlVideo,
     videoModel.thumbNail,
+    videoModel.pic,
     videoModel.createdAt
   )
 }
@@ -46,6 +47,7 @@ export class VideoRepository {
       title: video.title,
       urlVideo: video.urlVideo,
       thumbNail: video.thumbNail,
+      pic: video.pic,
       createdAt: video.createdAt
     })
 

@@ -4,7 +4,8 @@ import { existsSync, mkdir } from 'node:fs';
 
 var paths = [
     './public/videos',
-    './public/previews'
+    './public/previews',
+    './public/pic'
 ]
 
 for (const path of paths) {

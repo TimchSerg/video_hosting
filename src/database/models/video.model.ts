@@ -25,6 +25,9 @@ export class VideoModel extends Model<VideoModel> {
   @Column(DataType.TEXT)
   thumbNail!: string
 
+  @Column(DataType.TEXT)
+  pic!: string
+
   @Column(DataType.DATE)
   updatedAt!: Date
 

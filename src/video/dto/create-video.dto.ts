@@ -13,5 +13,8 @@ export class CreateVideoDto {
 
   @IsString()
   thumbNail!: string;
+
+  @IsString()
+  pic!: string;
   
 }
