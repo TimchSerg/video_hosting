@@ -11,6 +11,7 @@ export class VideoFactory {
   async create(
     name: string,
     title: string,
+    filename: string,
     urlVideo: string,
     thumbNail: string,
     pic: string
@@ -20,6 +21,7 @@ export class VideoFactory {
       new Id(UUID.generate()),
       name,
       title,
+      filename,
       urlVideo,
       thumbNail,
       pic,

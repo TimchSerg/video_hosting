@@ -47,11 +47,10 @@ export class VideoController {
   ) {
     const baseUrl = `${req.protocol}://${req.get('Host')}`;
     const originalName = file.filename.split('.')[0];
-    const filename = originalName + '.webp';
+    const filename = '0_' + originalName + '.webp';
     const thumbnail = "./public/previews/"+filename;
     const pic = "./public/pic/"+filename;
-
-    // console.log('error controller', file.destination+'/'+file.filename)
+    
     await this.videoService.createFragmentPreview(file.destination+'/'+file.filename, thumbnail);
     
     try {
@@ -65,7 +64,8 @@ export class VideoController {
       throw new WrongFormatException('Произошла ошибка во время создания картинки')
     }
 
-    return {  
+    return {
+      filename: '0_' + file.filename,
       urlVideo: baseUrl + '/api/video/file/video/0_' + file.filename, 
       thumbNail: baseUrl + '/api/video/file/thumbnail/' + filename,
       pic: baseUrl + '/api/video/file/pic/' + filename,
@@ -93,6 +93,11 @@ export class VideoController {
   async getFilePic(@Param("filename") filename: string, @Res() res: any) {
     if(filename === null) throw new NotFoundException()
     res.sendFile(filename, { root: 'public/pic'});
+  }
+
+  @Get('/name/:filename')
+  async findOneByName(@Param('filename') filename: string) {
+    return this.videoService.findOneByName(filename);
   }
 
   @Get(':id')

@@ -106,6 +106,7 @@ export class VideoService {
     const video = await this.videoFactory.create(
       createVideoDto.name,
       createVideoDto.title,
+      createVideoDto.filename,
       createVideoDto.urlVideo,
       createVideoDto.thumbNail,
       createVideoDto.pic
@@ -121,6 +122,15 @@ export class VideoService {
   async findOne(id: string) {
     const video = await this.videoModel.findOne({
       where: { id: id }
+    });
+    if(!video) throw new WrongFormatException('Данный видеоролик не найден');
+
+    return video
+  }
+
+  async findOneByName(filename: string) {
+    const video = await this.videoModel.findOne({
+      where: { filename: filename }
     });
     if(!video) throw new WrongFormatException('Данный видеоролик не найден');
 

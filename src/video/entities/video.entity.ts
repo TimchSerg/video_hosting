@@ -4,6 +4,7 @@ export class Video {
   private _id: Id
   private _name: string
   private _title: string
+  private _filename: string
   private _urlVideo: string
   private _thumbNail: string
   private _pic: string
@@ -13,6 +14,7 @@ export class Video {
     id: Id,
     name: string,
     title: string,
+    filename: string,
     urlVideo: string,
     thumbNail: string,
     pic: string,
@@ -21,6 +23,7 @@ export class Video {
     this._id = id
     this._name = name
     this._title = title
+    this._filename = filename
     this._urlVideo = urlVideo
     this._thumbNail = thumbNail
     this._pic = pic
@@ -45,6 +48,14 @@ export class Video {
 
   set title(title: string) {
     this._title = title
+  }
+
+  get filename(): string {
+    return this._filename
+  }
+
+  set filename(filename: string) {
+    this._filename = filename
   }
 
   get urlVideo(): string {
