@@ -7,11 +7,6 @@
 ```bash
 $ npm install
 ```
-В связи с конфликтами модулей @nestjs/serve-static и fluent-ffmpeg (_временно, в скором времени будет исправлено_) для установки использовать команду с устаревшими модулями
-
-```bash
-$ npm install --legacy-peer-deps
-```
 
 В проекте используется модуль fluent-ffmpeg. 
 Подробнее о создании превью к видео [Статья](https://blog.logrocket.com/generating-video-previews-with-node-js-and-ffmpeg/)

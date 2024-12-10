@@ -10,7 +10,7 @@ import {
   UploadedFile, 
   Res, 
   NotFoundException, 
-  Req 
+  Req, 
 } from '@nestjs/common';
 import { VideoService } from './providers/video.service';
 import { UpdateVideoDto } from './dto/update-video.dto';
@@ -20,12 +20,14 @@ import { uploadVideoHelper } from './upload.video.helper';
 import { CreateVideoDto } from './dto/create-video.dto';
 import {Request} from 'express';
 import * as sharp from 'sharp';
-import * as path from 'path';
 import { WrongFormatException } from 'src/exceptions';
+import { FfmpegPipe } from 'src/pipe/ffmpeg.file';
 
 @Controller('video')
 export class VideoController {
-  constructor(private readonly videoService: VideoService) {}
+  constructor(
+    private readonly videoService: VideoService
+  ) {}
 
   @Post()
   async create(@Body() createVideoDto: CreateVideoDto) {
@@ -41,13 +43,14 @@ export class VideoController {
   }))
   async upload(
     @Req() req: Request,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile(FfmpegPipe) file: Express.Multer.File
   ) {
     const baseUrl = `${req.protocol}://${req.get('Host')}`;
     const originalName = file.filename.split('.')[0];
-    const filename = originalName + '.webp';
+    const filename = '0_' + originalName + '.webp';
     const thumbnail = "./public/previews/"+filename;
-    const pic = "./public/pic/"+filename
+    const pic = "./public/pic/"+filename;
+    
     await this.videoService.createFragmentPreview(file.destination+'/'+file.filename, thumbnail);
     
     try {
@@ -61,8 +64,9 @@ export class VideoController {
       throw new WrongFormatException('Произошла ошибка во время создания картинки')
     }
 
-    return {  
-      urlVideo: baseUrl + '/api/video/file/video/' + file.filename, 
+    return {
+      filename: '0_' + file.filename,
+      urlVideo: baseUrl + '/api/video/file/video/0_' + file.filename, 
       thumbNail: baseUrl + '/api/video/file/thumbnail/' + filename,
       pic: baseUrl + '/api/video/file/pic/' + filename,
     }
@@ -89,6 +93,11 @@ export class VideoController {
   async getFilePic(@Param("filename") filename: string, @Res() res: any) {
     if(filename === null) throw new NotFoundException()
     res.sendFile(filename, { root: 'public/pic'});
+  }
+
+  @Get('/name/:filename')
+  async findOneByName(@Param('filename') filename: string) {
+    return this.videoService.findOneByName(filename);
   }
 
   @Get(':id')

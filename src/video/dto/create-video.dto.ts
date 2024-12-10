@@ -9,6 +9,9 @@ export class CreateVideoDto {
   title!: string;
 
   @IsString()
+  filename!: string;
+
+  @IsString()
   urlVideo!: string;
 
   @IsString()

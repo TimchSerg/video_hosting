@@ -12,7 +12,7 @@ console.log(join(__dirname, '../../../', 'client'))
       load: [configuration],
     }),
     DatabaseModule,
-    VideoModule
+    VideoModule,
   ],
   controllers: [],
   providers: []

@@ -90,7 +90,8 @@ export class VideoService {
           'libwebp',
           '-loop 0', // Повторение
           '-vf fps=15', 
-          '-vf scale=720:-1' // Размер 720 с соотношением сторон
+          '-vf scale=720:-1', // Размер 720 с соотношением сторон
+          '-quality 10'
         ])
         .noAudio()
         .output(outputPath)
@@ -105,6 +106,7 @@ export class VideoService {
     const video = await this.videoFactory.create(
       createVideoDto.name,
       createVideoDto.title,
+      createVideoDto.filename,
       createVideoDto.urlVideo,
       createVideoDto.thumbNail,
       createVideoDto.pic
@@ -120,6 +122,15 @@ export class VideoService {
   async findOne(id: string) {
     const video = await this.videoModel.findOne({
       where: { id: id }
+    });
+    if(!video) throw new WrongFormatException('Данный видеоролик не найден');
+
+    return video
+  }
+
+  async findOneByName(filename: string) {
+    const video = await this.videoModel.findOne({
+      where: { filename: filename }
     });
     if(!video) throw new WrongFormatException('Данный видеоролик не найден');
 
