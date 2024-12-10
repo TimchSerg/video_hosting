@@ -22,6 +22,7 @@ import {Request} from 'express';
 import * as sharp from 'sharp';
 import { WrongFormatException } from 'src/exceptions';
 import { FfmpegPipe } from 'src/pipe/ffmpeg.file';
+const fs = require('fs');
 
 @Controller('video')
 export class VideoController {
@@ -80,7 +81,19 @@ export class VideoController {
   @Get("/file/video/:filename")
   async getFileVideo(@Param("filename") filename: string, @Res() res: any) {
     if(filename === null) throw new NotFoundException()
-    res.sendFile(filename, { root: 'public/videos'});
+    // res.download(filename, { root: 'public/videos'});
+    // Path to your video file
+    const videoPath = `public/videos/${filename}`;
+
+    // Read the video file
+    fs.readFile(videoPath, (err, data) => {
+      if (err) {
+          console.error('Error reading video file:', err);
+          return;
+      }
+
+      return res.end(data);
+    });
   }
 
   @Get("/file/thumbnail/:filename")
