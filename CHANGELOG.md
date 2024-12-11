@@ -4,12 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Семантического управления версиями] [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 # Versions history
-- [1.2.1 - 2024-12-10](#120---2024-12-10)
+- [1.2.2 - 2024-12-10](#122---2024-12-10)
+- [1.2.1 - 2024-12-10](#121---2024-12-10)
 - [1.2.0 - 2024-12-10](#120---2024-12-10)
 - [1.1.0 - 2024-11-27](#110---2024-11-27)
 - [1.0.0 - 2024-11-26](#100---2024-11-26)
 
-### 1.2.1 - 2024-12-10
+### 1.2.2 - 2024-12-11
+#### Updated
+- Updated video encoding settings for previews
+
+### 1.2.1 - 2024-12-11
 #### Updated
 - Updated get video. blob
 
