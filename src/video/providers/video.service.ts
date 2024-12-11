@@ -89,9 +89,10 @@ export class VideoService {
           '-vcodec',
           'libwebp',
           '-loop 0', // Повторение
-          '-vf fps=15', 
+          '-vf fps=30', 
+          '-r 30',
           '-vf scale=720:-1', // Размер 720 с соотношением сторон
-          '-quality 10'
+          '-quality 25'
         ])
         .noAudio()
         .output(outputPath)
