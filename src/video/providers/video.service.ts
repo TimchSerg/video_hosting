@@ -92,6 +92,7 @@ export class VideoService {
           '-vf fps=30', 
           '-r 30',
           '-vf scale=720:-1', // Размер 720 с соотношением сторон
+          '-tag:v hvc1',
           '-quality 25'
         ])
         .noAudio()
