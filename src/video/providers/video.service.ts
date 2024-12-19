@@ -91,7 +91,7 @@ export class VideoService {
           '-loop 0', // Повторение
           '-vf fps=30', 
           '-r 30',
-          '-vf scale=360:-1', // Размер 720 с соотношением сторон
+          '-vf scale=720:-1', // Размер 720 с соотношением сторон
           '-quality 25'
         ])
         .noAudio()
