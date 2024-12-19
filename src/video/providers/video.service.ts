@@ -91,9 +91,42 @@ export class VideoService {
           '-loop 0', // Повторение
           '-vf fps=30', 
           '-r 30',
-          '-vf scale=720:-1', // Размер 720 с соотношением сторон
-          '-tag:v hvc1',
+          '-vf scale=360:-1', // Размер 720 с соотношением сторон
           '-quality 25'
+        ])
+        .noAudio()
+        .output(outputPath)
+        .on('end', resolve)
+        .on('error', reject)
+        .run();
+    });
+  };
+
+  async createFragmentPreviewGif(
+    inputPath,
+    outputPath,
+    fragmentDurationInSeconds = 4,
+  ) {
+    return new Promise(async (resolve, reject) => {
+      const videoInfo = await this.getVideoInfo(
+        inputPath,
+      );
+
+      const { durationInSeconds: videoDurationInSeconds } = videoInfo
+
+      const startTimeInSeconds = this.getStartTimeInSeconds(
+        videoDurationInSeconds,
+        fragmentDurationInSeconds,
+      );
+      // 
+      return new ffmpeg()
+        .input(inputPath)
+        .inputOptions([`-ss ${startTimeInSeconds}`])
+        .outputOptions([
+          `-t ${fragmentDurationInSeconds}`,
+          // '-filter_complex',
+          '-vf',
+          'fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse'
         ])
         .noAudio()
         .output(outputPath)

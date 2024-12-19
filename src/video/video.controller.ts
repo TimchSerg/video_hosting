@@ -53,6 +53,7 @@ export class VideoController {
     const pic = "./public/pic/"+filename;
     
     await this.videoService.createFragmentPreview(file.destination+'/'+file.filename, thumbnail);
+    await this.videoService.createFragmentPreviewGif(file.destination+'/'+file.filename, './public/previews/0_' + originalName + '.gif');
     
     try {
       sharp(thumbnail)
